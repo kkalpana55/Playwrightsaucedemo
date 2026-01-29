@@ -1,0 +1,28 @@
+{
+  "name": "saucedemo-web-automation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test-report": "npx playwright show-report",
+    "test_dev": "cross-env ENV_NAME=dev npx playwright test",
+    "test_qa": "cross-env ENV_NAME=qa npx playwright test",
+    "test_prod": "cross-env ENV_NAME=dev npx playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^25.0.9"
+  },
+  "dependencies": {
+    "cross-env": "^10.1.0",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^17.2.3",
+    "playwright": "^1.57.0",
+    "playwright-core": "^1.57.0"
+  },
+  "description": ""
+}
