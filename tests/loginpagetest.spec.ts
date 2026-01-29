@@ -29,4 +29,17 @@ await homepage.addtocart();
 await expect(homepage.cartItems).toHaveText("1");
  await mp.myCartList();
 //.log(cartItems);
-});  
+});
+test("Login page invalid credentials test", async ({ loginpage, commonUtils }) => {
+  const decryptedUserName = commonUtils.decryptText(
+    "U2FsdGVkX1+Zo1G1VbW8uY8n4x3H1+1J"
+  );
+  const decryptedPassword = commonUtils.decryptText(
+    "U2FsdGVkX19u6Y5qz3h6vQ9l5Z2H3g8K"
+  );
+
+  await loginpage.goto();
+  await loginpage.login(decryptedUserName, decryptedPassword, false);
+
+   
+});

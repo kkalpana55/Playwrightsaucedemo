@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test';
+import { Locator,expect, Page } from '@playwright/test';
 
 export class LoginPage {
   readonly page: Page;
@@ -14,26 +14,24 @@ export class LoginPage {
 async goto(){
     await this.page.goto('https://www.saucedemo.com/');
 }
-  async login(username: string, password: string) {
+  async login(username: string, password: string, shouldSucceed = true) {
+  await this.userNameInput.fill(username);
+  await this.passwordInput.fill(password);
+  await this.loginButton.click();
 
-    await this.userNameInput.fill(username);
-    await this.passwordInput.fill(password);
-   // Using Promise.all to wait for navigation after clicking login button to avoid the waiting issue
-        await this.loginButton.click();
-    const error = this.page.locator('[data-test="error"]');
-  if (await error.isVisible({ timeout: 3000 })) {
-    const msg = await error.textContent();
-    throw new Error(`LOGIN FAILED: ${msg}`);
+  const error = this.page.locator('[data-test="error"]');
+
+  if (shouldSucceed) {
+    // POSITIVE LOGIN FLOW
+    await this.page.locator('.inventory_container').waitFor({
+      state: 'visible',
+      timeout: 10000,
+    });
+  } else {
+    // NEGATIVE LOGIN FLOW
+    await expect(error).toBeVisible({ timeout: 5000 });
   }
-//directly  wait for inventory page to load used locator of inventory container instead of waiting for url
-  await this.page.locator('.inventory_container').waitFor({
-    state: 'visible',
-    timeout: 10000,
-  });
-
-
-  }
-
-
+}
 
 }
+
